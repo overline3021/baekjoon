@@ -1,36 +1,26 @@
 #include<stdio.h>
 #include<math.h>
 
-int Distinguish_Prime_Num(int num) {
-	int tmp = 0;
+void Factorization(int num) {
+	int tmp = 0, i = 2;
 
-	for (int i = 2; i <= sqrt(num); i++) {
-		if (num % i == 0) tmp++;
+	for (i; i <= num; i++) {
+		if (num % i == 0) {
+			printf("%d\n", i);
+			num /= i;
+			i--;
+		}
 	}
-
-	if (num > 1 && tmp == 0) return 0;
-	else return 1;
 }
 
 int main() {
-	int count = 0, Input_M = 0, Input_N = 0, min = 10000;
+	int Input_Num = 0;
 
-	scanf_s("%d", &Input_M);
-	scanf_s("%d", &Input_N);
+	scanf_s("%d", &Input_Num);
 
-	for (int i = Input_M; i <= Input_N; i++) {
-		if (Distinguish_Prime_Num(i) == 0) {
-			count += i;
-
-			if (min > i) min = i;
-		}
-	}
-
-	if (count == 0) printf("-1");
-	else {
-		printf("%d\n", count);
-		printf("%d", min);
-	}
+	if (Input_Num == 1) return 0;
+	
+	Factorization(Input_Num);
 
 	return 0;
 }
