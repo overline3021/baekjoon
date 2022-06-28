@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<string.h>
+#include<stdlib.h>
 
 void reverse(char Num[]) {
     char tmp[10001];
@@ -62,9 +63,15 @@ void sum(char a[], char b[], char result[]) {
 }
 
 int main() {
-    char Large_Num_A[10001], Large_Num_B[10001], result[10002];
+    char *Large_Num_A, *Large_Num_B, *result;
 
-    scanf_s("%s %s", &Large_Num_A, 10000, &Large_Num_B, 10000);
+    Large_Num_A = (char*)malloc(sizeof(char) * 10001);
+    Large_Num_B = (char*)malloc(sizeof(char) * 10001);
+    result = (char*)malloc(sizeof(char) * 10002);
+
+    if (Large_Num_A == NULL || Large_Num_B == NULL || result == NULL) goto move;
+
+    scanf_s("%s %s", Large_Num_A, 10000, Large_Num_B, 10000);
 
     reverse(Large_Num_A);
     reverse(Large_Num_B);
@@ -77,6 +84,11 @@ int main() {
     reverse(result);
 
     for (int i = 0; i < strlen(result); i++) printf("%d", result[i] - 48);
+
+move:
+    free(Large_Num_A);
+    free(Large_Num_B);
+    free(result);
 
     return 0;
 }
