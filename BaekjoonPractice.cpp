@@ -1,22 +1,82 @@
 #include<stdio.h>
-#include<math.h>
+#include<string.h>
 
-void Distinguish_Prime_Num(int num_m, int num_n, int tmp_array[]) {
-	for (int i = 2; i <= num_n; i++) {
-		for (int j = 2; j * i <= num_n; j++) tmp_array[j * i] = 1;
-	}
+void reverse(char Num[]) {
+    char tmp[10001];
+    int count = 0;
+
+    count = strlen(Num) - 1;
+
+    for (int i = 0; count >= 0; i++) {
+        tmp[i] = Num[count];
+        count--;
+    }
+
+    tmp[strlen(Num)] = '\0';
+
+    strcpy_s(Num, 10001, tmp);
+}
+
+void sum(char a[], char b[], char result[]) {
+    int count = 0, Count_A = 0, Count_B = 0;
+
+    Count_A = strlen(a);
+    Count_B = strlen(b);
+
+    result[0] = '0';
+
+    if (Count_A > Count_B) count = Count_B;
+    else count = Count_A;
+
+    for (int i = 0; i < count; i++) {
+        if (a[i] + b[i] + result[i] - 48 * 3 >= 10) result[i + 1] = '1';
+        else result[i + 1] = '0';
+
+        result[i] = (result[i] + a[i] + b[i] - 48 * 3) % 10 + 48;
+    }
+
+    if (Count_A > Count_B) {
+        for (int i = Count_B; i < Count_A; i++) {
+            if (a[i] + result[i] - 48 * 2 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + a[i] - 48 * 2) % 10 + 48;
+        }
+        if (result[Count_A] == '1') result[Count_A + 1] = '\0';
+        else result[Count_A] = '\0';
+    }
+    else if (Count_A < Count_B) {
+        for (int i = Count_A; i < Count_B; i++) {
+            if (b[i] + result[i] - 48 * 2 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + b[i] - 48 * 2) % 10 + 48;
+        }
+        if (result[Count_B] == '1') result[Count_B + 1] = '\0';
+        else result[Count_B] = '\0';
+    }
+    else {
+        if (result[count] == '1') result[count + 1] = '\0';
+        else result[count] = '\0';
+    }
 }
 
 int main() {
-	int Input_N = 0, Input_M = 0, Eratosthenes[1000001] = { 0, };
+    char Large_Num_A[10001], Large_Num_B[10001], result[10002];
 
-	Eratosthenes[1] = 1;
+    scanf_s("%s %s", &Large_Num_A, 10000, &Large_Num_B, 10000);
 
-	scanf_s("%d %d", &Input_M, &Input_N);
+    reverse(Large_Num_A);
+    reverse(Large_Num_B);
 
-	Distinguish_Prime_Num(Input_M, Input_N, Eratosthenes);
+    printf("%s\n", Large_Num_A);
+    printf("%s\n", Large_Num_B);
 
-	for (int i = Input_M; i <= Input_N; i++) if (Eratosthenes[i] == 0) printf("%d\n", i);
+    sum(Large_Num_A, Large_Num_B, result);
 
-	return 0;
+    reverse(result);
+
+    for (int i = 0; i < strlen(result); i++) printf("%d", result[i] - 48);
+
+    return 0;
 }
