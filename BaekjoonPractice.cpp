@@ -13,17 +13,24 @@ int Distinguish_Prime_Num(int num) {
 }
 
 int main() {
-	int count = 0, Input_Count = 0, Input_Num = 0;
+	int count = 0, Input_M = 0, Input_N = 0, min = 10000;
 
-	scanf_s("%d", &Input_Count);
+	scanf_s("%d", &Input_M);
+	scanf_s("%d", &Input_N);
 
-	for (int i = 0; i < Input_Count; i++) {
-		scanf_s("%d", &Input_Num);
+	for (int i = Input_M; i <= Input_N; i++) {
+		if (Distinguish_Prime_Num(i) == 0) {
+			count += i;
 
-		if (Distinguish_Prime_Num(Input_Num) == 0) count++;
+			if (min > i) min = i;
+		}
 	}
 
-	printf("%d", count);
+	if (count == 0) printf("-1");
+	else {
+		printf("%d\n", count);
+		printf("%d", min);
+	}
 
 	return 0;
 }
