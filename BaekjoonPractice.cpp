@@ -1,30 +1,74 @@
 #include<stdio.h>
-#include<math.h>
+#include<string.h>
 
-int Count_Prime_Num_Until_Double(int n, int web[]) {
-	int count = 0;
+void reverse(char Num[]) {
+    char tmp;
+    int count = strlen(Num);
 
-	for (int i = n + 1; i <= 2 * n; i++) if (web[i] == 0) count++;
+    for (int i = 0; i < count / 2; i++) {
+        tmp = Num[i];
+        Num[i] = Num[count - i - 1];
+        Num[count - i - 1] = tmp;
+    }
+}
 
-	return count;
+void sum(char a[], char b[], char result[]) {
+    int Count_A = 0, Count_B = 0;
+
+    Count_A = strlen(a);
+    Count_B = strlen(b);
+
+    result[0] = '0';
+
+    if (Count_A > Count_B) {
+        for (int i = 0; i < Count_B; i++) {
+            if (a[i] + b[i] + result[i] - '0' * 3 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + a[i] + b[i] - '0' * 3) % 10 + '0';
+        }
+
+        for (int i = Count_B; i < Count_A; i++) {
+            if (a[i] + result[i] - '0' * 2 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + a[i] - '0' * 2) % 10 + '0';
+        }
+        if (result[Count_A] == '1') result[Count_A + 1] = '\0';
+        else result[Count_A] = '\0';
+    }
+    else {
+        for (int i = 0; i < Count_A; i++) {
+            if (a[i] + b[i] + result[i] - '0' * 3 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + a[i] + b[i] - '0' * 3) % 10 + '0';
+        }
+
+        for (int i = Count_A; i < Count_B; i++) {
+            if (b[i] + result[i] - '0' * 2 >= 10) result[i + 1] = '1';
+            else result[i + 1] = '0';
+
+            result[i] = (result[i] + b[i] - '0' * 2) % 10 + '0';
+        }
+        if (result[Count_B] == '1') result[Count_B + 1] = '\0';
+        else result[Count_B] = '\0';
+    }
 }
 
 int main() {
-	int Input_N = 1, Eratosthenes[246913] = { 0, };
+    char Large_Num_A[10001], Large_Num_B[10001], result[10002];
 
-	Eratosthenes[1] = 1;
+    scanf_s("%s %s", &Large_Num_A, 10000, &Large_Num_B, 10000);
 
-	for (int i = 2; i <= sqrt(246912); i++) {
-		for (int j = 2; j * i <= 246912; j++) Eratosthenes[i * j] = 1;
-	}
+    reverse(Large_Num_A);
+    reverse(Large_Num_B);
 
-	while (Input_N != 0) {
-		scanf_s("%d", &Input_N);
+    sum(Large_Num_A, Large_Num_B, result);
 
-		if (Input_N == 0) return 0;
+    reverse(result);
 
-		printf("%d\n", Count_Prime_Num_Until_Double(Input_N, Eratosthenes));
-	}
+    for (int i = 0; i < strlen(result); i++) printf("%d", result[i] - '0');
 
-	return 0;
+    return 0;
 }
