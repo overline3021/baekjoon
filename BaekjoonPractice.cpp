@@ -1,31 +1,29 @@
 #include<stdio.h>
 #include<math.h>
 
-int Divide_Prime_Num(int n, int web[]) {
-	int min = 0;
+int Count_Prime_Num_Until_Double(int n, int web[]) {
+	int count = 0;
 
-	for (min = n / 2; web[min] != 0 || web[n - min] != 0; min--);
+	for (int i = n + 1; i <= 2 * n; i++) if (web[i] == 0) count++;
 
-	return min;
+	return count;
 }
 
 int main() {
-	int Test_Case = 0, Input_Even_Num = 0, tmp = 0, Eratosthenes[10001] = { 0, };
+	int Input_N = 1, Eratosthenes[246913] = { 0, };
 
 	Eratosthenes[1] = 1;
 
-	for (int i = 2; i <= sqrt(10000); i++) {
-		for (int j = 2; j * i <= 10000; j++) Eratosthenes[i * j] = 1;
+	for (int i = 2; i <= sqrt(246912); i++) {
+		for (int j = 2; j * i <= 246912; j++) Eratosthenes[i * j] = 1;
 	}
 
-	scanf_s("%d", &Test_Case);
+	while (Input_N != 0) {
+		scanf_s("%d", &Input_N);
 
-	for (int i = 0; i < Test_Case; i++) {
-		scanf_s("%d", &Input_Even_Num);
+		if (Input_N == 0) return 0;
 
-		tmp = Divide_Prime_Num(Input_Even_Num, Eratosthenes);
-
-		printf("%d %d\n", tmp, Input_Even_Num - tmp);
+		printf("%d\n", Count_Prime_Num_Until_Double(Input_N, Eratosthenes));
 	}
 
 	return 0;
