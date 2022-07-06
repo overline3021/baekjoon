@@ -1,13 +1,18 @@
 #include<stdio.h>
 
 int main() {
-    int n = 0, result = 1;
+    int n = 0, tmp = 0, Fibonacci[21];
+
+    Fibonacci[0] = 0;
+    Fibonacci[1] = 1;
+
+    for (int i = 2; i <= 20; i++) {
+        Fibonacci[i] = Fibonacci[i - 1] + Fibonacci[i - 2];
+    }
 
     scanf_s("%d", &n);
 
-    for (int i = 1; i <= n; i++) result *= i;
-
-    printf("%d", result);
+    printf("%d", Fibonacci[n]);
 
     return 0;
 }
