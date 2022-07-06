@@ -1,18 +1,46 @@
 #include<stdio.h>
 
-int main() {
-    int n = 0, tmp = 0, Fibonacci[21];
+void recursion(int n, int count, int tmp) {
+    if (tmp == 0) {
+        for (int k = 0; k < count; k++) printf("____");
+        printf("\"재귀함수가 뭔가요?\"\n");
+        for (int k = 0; k < count; k++) printf("____");
+        printf("\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.\n");
+        for (int k = 0; k < count; k++) printf("____");
+        printf("마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.\n");
+        for (int k = 0; k < count; k++) printf("____");
+        printf("그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"\n");
 
-    Fibonacci[0] = 0;
-    Fibonacci[1] = 1;
-
-    for (int i = 2; i <= 20; i++) {
-        Fibonacci[i] = Fibonacci[i - 1] + Fibonacci[i - 2];
+        count++;
+        if (count == n) tmp = 1;
+        recursion(n, count, tmp);
     }
+    else if (tmp == 1 && count == n) {
+        for (int p = 0; p < count; p++) printf("____");
+        printf("\"재귀함수가 뭔가요?\"\n");
+        for (int p = 0; p < count; p++) printf("____");
+        printf("\"재귀함수는 자기 자신을 호출하는 함수라네\"\n");
+        for (int p = 0; p < count; p++) printf("____");
+        printf("라고 답변하였지.\n");
+        count--;
+        recursion(n, count, tmp);
+    }
+    else if (tmp == 1 && count >= 0) {
+        for (int m = 0; m < count; m++) printf("____");
+        printf("라고 답변하였지.\n");
+        count--;
+        recursion(n, count, tmp);
+    }
+}
+
+int main() {
+    int n = 0, count = 0, tmp = 0;
 
     scanf_s("%d", &n);
 
-    printf("%d", Fibonacci[n]);
+    printf("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.\n");
+
+    recursion(n, count, tmp);
 
     return 0;
 }
