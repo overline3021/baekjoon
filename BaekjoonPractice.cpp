@@ -1,23 +1,22 @@
 #include<stdio.h>
 
 int main() {
-    int n = 0, m = 0, num[101], result = 0;
+    int n = 0, result = 1000000, tmp = 0, carry = 0;
 
-    scanf_s("%d %d", &n, &m);
+    scanf_s("%d", &n);
 
-    for (int i = 0; i < n; i++) {
-        scanf_s("%d", &num[i]);
-    }
+    for (int i = 1; i < n; i++) {
+        carry = 0;
 
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            for (int k = j + 1; k < n; k++) {
-                if (num[i] + num[j] + num[k] > result && num[i] + num[j] + num[k] <= m) result = num[i] + num[j] + num[k];
-            }
+        for (tmp = i; tmp % 10 != 0; tmp /= 10) {
+            carry += tmp % 10;
         }
+
+        if (i < result && carry + i == n) result = i;
     }
 
-    printf("%d", result);
+    if (result == 1000000) printf("0");
+    else printf("%d", result);
 
     return 0;
 }
