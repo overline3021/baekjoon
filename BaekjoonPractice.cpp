@@ -1,46 +1,72 @@
 #include<stdio.h>
+#include<math.h>
 
-void recursion(int n, int count, int tmp) {
-    if (tmp == 0) {
-        for (int k = 0; k < count; k++) printf("____");
-        printf("\"재귀함수가 뭔가요?\"\n");
-        for (int k = 0; k < count; k++) printf("____");
-        printf("\"잘 들어보게. 옛날옛날 한 산 꼭대기에 이세상 모든 지식을 통달한 선인이 있었어.\n");
-        for (int k = 0; k < count; k++) printf("____");
-        printf("마을 사람들은 모두 그 선인에게 수많은 질문을 했고, 모두 지혜롭게 대답해 주었지.\n");
-        for (int k = 0; k < count; k++) printf("____");
-        printf("그의 답은 대부분 옳았다고 하네. 그런데 어느 날, 그 선인에게 한 선비가 찾아와서 물었어.\"\n");
+void Print_Star(int n, int row, int count, int three_count) {
+    int column = 1, tmp = 0, tmp_column = 0, tmp_row = 0, min = 0, MAX = 0;
 
-        count++;
-        if (count == n) tmp = 1;
-        recursion(n, count, tmp);
+    if (three_count == 1) {
+        for (int k = 0; k < pow(3, three_count); k++) {
+            for (int i = 0; i < n; i++) {
+                tmp = 0;
+
+                for (int j = 1; j <= count; j++) {
+                    tmp_column = column % 3;
+
+                    if (tmp_column == 2 && row == 2) tmp = 1;
+                }
+
+                if (tmp == 1) printf(" ");
+                else printf("*");
+
+                column++;
+            }
+            printf("\n");
+            row++;
+        }
     }
-    else if (tmp == 1 && count == n) {
-        for (int p = 0; p < count; p++) printf("____");
-        printf("\"재귀함수가 뭔가요?\"\n");
-        for (int p = 0; p < count; p++) printf("____");
-        printf("\"재귀함수는 자기 자신을 호출하는 함수라네\"\n");
-        for (int p = 0; p < count; p++) printf("____");
-        printf("라고 답변하였지.\n");
-        count--;
-        recursion(n, count, tmp);
+    else {
+        for (int k = pow(3, three_count - 1); k < pow(3, three_count); k++) {
+            for (int i = 0; i < n; i++) {
+                tmp = 0;
+
+                for (int j = 1; j <= count; j++) {
+                    tmp_column = column % (int)pow(3, j);
+                    tmp_row = row % (int)pow(3, j);
+                    min = pow(3, j - 1);
+                    MAX = pow(3, j) - pow(3, j - 1);
+
+                    if (tmp_column > min && tmp_column <= MAX && tmp_row > min && tmp_row <= MAX) tmp = 1;
+                }
+
+                if (tmp == 1) printf(" ");
+                else printf("*");
+
+                column++;
+            }
+            printf("\n");
+            row++;
+        }
     }
-    else if (tmp == 1 && count >= 0) {
-        for (int m = 0; m < count; m++) printf("____");
-        printf("라고 답변하였지.\n");
-        count--;
-        recursion(n, count, tmp);
+
+    if (row < n) {
+        three_count++;
+        Print_Star(n, row, count, three_count);
     }
 }
 
 int main() {
-    int n = 0, count = 0, tmp = 0;
+    int n = 0, row = 1, count = 0, tmp_n, three_count = 1;
 
     scanf_s("%d", &n);
 
-    printf("어느 한 컴퓨터공학과 학생이 유명한 교수님을 찾아가 물었다.\n");
+    tmp_n = n;
 
-    recursion(n, count, tmp);
+    while (tmp_n != 1) {
+        count++;
+        tmp_n /= 3;
+    }
+
+    Print_Star(n, row, count, three_count);
 
     return 0;
 }
