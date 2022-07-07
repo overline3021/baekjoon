@@ -1,22 +1,21 @@
 #include<stdio.h>
 
 int main() {
-    int n = 0, result = 1000000, tmp = 0, carry = 0;
+    int n = 0, count = 0, six_tmp = 0, result = 0;
 
     scanf_s("%d", &n);
 
-    for (int i = 1; i < n; i++) {
-        carry = 0;
+    for (result = 0; count != n; result++) {
+        six_tmp = 0;
 
-        for (tmp = i; tmp % 10 != 0; tmp /= 10) {
-            carry += tmp % 10;
+        for (int j = result; j / 100 != 0; j /= 10) {
+            if (j % 1000 == 666) six_tmp = 1;
         }
 
-        if (i < result && carry + i == n) result = i;
+        if (six_tmp == 1) count++;
     }
 
-    if (result == 1000000) printf("0");
-    else printf("%d", result);
+    printf("%d", result - 1);
 
     return 0;
 }
