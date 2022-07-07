@@ -1,22 +1,23 @@
 #include<stdio.h>
 
-void Print_Star(int row, int column, int n) {
-    if ((row / n) % 3 == 1 && (column / n) % 3 == 1) printf(" ");
-    else if (n / 3 == 0) printf("*");
-    else Print_Star(row, column, n / 3);
-}
-
 int main() {
-    int n = 0, row = 0, column = 0;
+    int n = 0, m = 0, num[101], result = 0;
 
-    scanf_s("%d", &n);
+    scanf_s("%d %d", &n, &m);
 
-    for (row = 0; row < n; row++) {
-        for (column = 0; column < n; column++) {
-            Print_Star(row, column, n);
-        }
-        printf("\n");
+    for (int i = 0; i < n; i++) {
+        scanf_s("%d", &num[i]);
     }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            for (int k = j + 1; k < n; k++) {
+                if (num[i] + num[j] + num[k] > result && num[i] + num[j] + num[k] <= m) result = num[i] + num[j] + num[k];
+            }
+        }
+    }
+
+    printf("%d", result);
 
     return 0;
 }
